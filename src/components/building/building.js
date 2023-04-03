@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { useSelector } from 'react-redux';
 import Floor from '../floor/floor';
 import { BuildingArea, Structure, ImageContainer } from './building.style';
+import { useResizeDetector } from 'react-resize-detector';
 
 const Building = () => {
 
@@ -10,6 +11,9 @@ const Building = () => {
     const positions = useSelector(state => state.building.positions);
 
     const [buttonsRef, setButtonsRef] = useState([]);
+
+    const {height: buildingHeight, ref: buildingRef } = useResizeDetector();
+
 
     useEffect(() => {
         const buttons = [];
@@ -22,11 +26,11 @@ const Building = () => {
     }, [building]);
 
     return (
-        <BuildingArea>
+        <BuildingArea ref={buildingRef}>
             <Structure>
                 {
                     Object.values(building).map((floor, idx) => {
-                        return <Floor key={floor.id} buttonsRef={buttonsRef} buttonFloor={buttonsRef[idx]} {...floor} />
+                        return <Floor key={floor.id} buildingHeight={buildingHeight} buttonsRef={buttonsRef} buttonFloor={buttonsRef[idx]} {...floor} />
                     })
                 }
                 {

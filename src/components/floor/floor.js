@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import  converter from 'number-to-words';
 import { useResizeDetector } from 'react-resize-detector';
 
-const Floor = ({poles, floorIndex, buttonFloor, buttonsRef}) => {
+const Floor = ({poles, floorIndex, buttonFloor, buttonsRef, buildingHeight}) => {
 
     const [isButtonClicked, setIsButtonClicked] = useState(false);
     const [hasReachedFloor, setHasReachedFloor] = useState(false);
@@ -74,7 +74,7 @@ const Floor = ({poles, floorIndex, buttonFloor, buttonsRef}) => {
         
         const updatedPositions = positionsRef.current.map(position =>
             position.id === closestElevator.id
-              ? ({ ...position, verticalPosition: floorIndex * (poleHeight / 5.45) })
+              ? ({ ...position, verticalPosition: floorIndex * (poleHeight / ( 0.008 * buildingHeight)) })
               : position
           );
 
